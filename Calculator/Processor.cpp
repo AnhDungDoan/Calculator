@@ -1,32 +1,22 @@
+#include "Processor.h"
+
 #include <iostream>
 #include <string>
 #include <stack>
 
-#define F(i,a,b) for (int i=a; i<=b; i++)
 
-using namespace std;
-
-const int MAX = 100;
-
-struct DataStored
-{
-	char Name[11];
-	float Data;
-};
-
-DataStored VariableDataStored[MAX + 1];
-
-bool isDigit(char x)
+bool Processor::isDigit(char x)
 {
 	return (x >= '0' && x <= '9');
 }
 
-bool isOperator(char x)
+bool Processor::isOperator(char x)
 {
 	return (x == '+' || x == '-' || x == '*' || x == '/');
 }
 
-int Prioritize(char x)
+
+int Processor::Prioritize(char x)
 {
 	if (x == '(') return 0;
 	else
@@ -37,29 +27,14 @@ int Prioritize(char x)
 	return -1;
 }
 
-void InfixToPostfix(char infix[], char postfix[])
+void Processor::InfixToPostfix(std::string infix, char postfix[])
 {
 	int j = 0;
-	stack <char> Operator;
+	std::stack <char> Operator;
 
-	bool minus[MAX + 1];
-	memset(minus, false, sizeof(minus));
-	int nInfix = strlen(infix);
+	int nInfix = infix.size();
 
-	// Change minus to plus instead
-	/*for (int i = 0; infix[i] != '\0'; i++)
-		if (infix[i] == '-')
-		{
-			infix[i] = '+';
-			int j = i;
-			while (!isDigit(infix[j]) && infix[j + 1] != '\0') j++;
-
-			if (!minus[j]) minus[j] = true;
-			else
-				minus[j] = false;
-		}*/
-
-	for (int i = 0; i<nInfix; i++)
+	for (int i = 0; i < nInfix; i++)
 	{
 		if (infix[i] == ' ' || infix[i] == '\t') continue; //remove space in infix array
 
@@ -71,7 +46,7 @@ void InfixToPostfix(char infix[], char postfix[])
 				i++;
 				postfix[j++] = infix[i];
 			}
-			
+
 			postfix[j++] = ' ';
 		}
 		else
@@ -100,7 +75,7 @@ void InfixToPostfix(char infix[], char postfix[])
 
 							if (Operator.empty()) break;
 						}
-					}				
+					}
 					Operator.push(infix[i]);
 				}
 		}
@@ -116,17 +91,17 @@ void InfixToPostfix(char infix[], char postfix[])
 
 	// Calculate
 
-	stack <float> Number;
+	std::stack <float> Number;
 	int nPostfix = strlen(postfix);
-	for (int i = 0; i<nPostfix; i++)
+	for (int i = 0; i < nPostfix; i++)
 	{
 		while (postfix[i] == ' ') i++;
 
 		if (isDigit(postfix[i]))
 		{
 			float realNumber = 1;
-			float num = int(postfix[i]) - 48;
-			
+			float num = (float) int(postfix[i]) - 48;
+
 			while (isDigit(postfix[i + 1]) || (postfix[i + 1] == '.'))
 			{
 				i++;
@@ -135,7 +110,7 @@ void InfixToPostfix(char infix[], char postfix[])
 					realNumber = 10;
 					continue;
 				}
-				float x = int(postfix[i]) - 48;
+				float x = (float) int(postfix[i]) - 48;
 
 				if (realNumber == 1) num = num * 10 + x;
 				else
@@ -169,88 +144,46 @@ void InfixToPostfix(char infix[], char postfix[])
 	}
 
 	float result = Number.top();
-	cout << "Result is: " << result;
+	std::cout << "Result is: " << result;
 }
 
-void basicCalculator()
+void Processor::basicCalculator(std::string Expression)
 {
 	bool checkRightExpression = false;
-	char Expression[MAX + 1], postfixExpression[MAX + 1];
-
-	cout << "\nWrite your calculation: ";
-
-	cin.ignore();
-	gets_s(Expression);
+	char postfixExpression[MAX + 1];
 
 	// Check that the expression entered is correct or not
-
+/*
 	while (!checkRightExpression)
 	{
 		int lengthExpression = strlen(Expression);
 
 		int rightParenthese = 0;
 
-		F(i, 0, lengthExpression - 1)
+		for (int i = 0; i < lengthExpression; i++)
 		{
-			if (Expression[i] == '(') 
+			if (Expression[i] == '(')
 				rightParenthese++;
 			else
-			if (Expression[i] == ')')
-				rightParenthese--;
+				if (Expression[i] == ')')
+					rightParenthese--;
 
 			if (rightParenthese < 0) break;
 		}
 
-		if (rightParenthese != 0 || isOperator(Expression[lengthExpression-1]))
+		if (rightParenthese != 0 || isOperator(Expression[lengthExpression - 1]))
 		{
-			cout << "Your expression is incorrect, enter again? Y/N: ";
+			std::cout << "Your expression is incorrect, enter again? Y/N: ";
 			char question;
-			cin >> question;
+			std::cin >> question;
 			if (question == 'N') return;
 		}
 		else checkRightExpression = true;
 
 
 	}
+*/
 
-	// Process expression using stack and Postfix
+	// Process expression using std::stack and Postfix
 	InfixToPostfix(Expression, postfixExpression);
-}
-
-void assignVariable()
-{
-	char Input[MAX + 1], Variable[MAX + 1];
-
-	cin.ignore();
-	gets_s(Input);
-
-	int i;
-	for (i = 0; Input[i] != ' '; i++)  Variable[i] = Input[i];
-	Variable[++i] = '\0';
-
-
-}
-
-void Menu()
-{
-	cout << "Choose your option:\n";
-	cout << "1: Basic Calculator\n";
-	cout << "2: Assign Variable:\n";
-}
-
-int main()
-{
-	Menu();
-	int option;
-	cin >> option;
-
-	switch (option)
-	{
-	case 1:
-		basicCalculator();
-		break;
-	case 2:
-		assignVariable();
-		break;
-	}
 }

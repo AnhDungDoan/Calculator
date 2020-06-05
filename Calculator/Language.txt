@@ -1,0 +1,17 @@
+integer = [0-9]+
+real_number = integer.integer
+assignment_operator = [=]
+calculator_operator = [+-*/]
+open_bracket = (
+close_bracket = )
+
+existed_variable  = [a-z | A-Z]+ (have been initialized)
+not_existed_variable  = [a-z | A-Z]+ (have not been initialized)
+
+number = [integer | real_number]
+variable = [existed_variable | not_existed_variable]
+
+valued = [number | existed_variable] 
+
+exp = (* exp | exp1 calculator_operator exp2 | valued )* (when '(' exist, ')' exist)
+assignment = variable assignment_operator exp

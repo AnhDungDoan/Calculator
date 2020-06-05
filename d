@@ -1,0 +1,12 @@
+[33mcommit bb9338384befe2827ee9e842226ce0870dbc8c76[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: AnhDungDoan <khongphaidoandung@gmail.com>
+Date:   Wed Jun 3 15:20:28 2020 +0700
+
+            Basic Calculator Completed!
+
+[33mcommit c4aeb2e9cb9cc53bf901f2eaafaed04d2c3bfc11[m
+Author: AnhDungDoan <khongphaidoandung@gmail.com>
+Date:   Tue Jun 2 23:26:38 2020 +0700
+
+            Created project
+            Re-enter if the expression wrong (1)
