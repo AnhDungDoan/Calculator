@@ -6,24 +6,39 @@ class Processor
 private:
 	static const int MAX = 100;
 
-	struct DataStored
+	struct floatDataStored
 	{
-		char Name[11];
+		std::string Name;
 		float Data;
 	};
 
-	static DataStored VariableDataStored[MAX  + 1];
+	struct vectorType
+	{
+		std::string Name;
+		float coordinate[2];
+	};
+
+	static floatDataStored VariableDataStored[MAX  + 1];
+	static int nVariableDataStored;
+
+	static vectorType vectorStored[MAX + 1];
+	static int nVectorStored;
 
 	static bool isDigit(char x);
+	static bool isChar(char x);
 	static bool isOperator(char x);
 	static int Prioritize(char x);
-	static void InfixToPostfix(std::string infix, char postfix[]);
+	static float InfixToPostfix(std::string infix, char postfix[]);
 
 public:
 	friend class IOhandler;
 
-	static void basicCalculator(std::string Expression);
-	static int Generator(std::string Expression);
+	static float fakeNumber;
 
+	static int Analysis(std::string &Expression);
+
+	static float basicCalculator(std::string Expression);
+	static void assignmentVariable(std::string Expression);
+	static float* vectorCalculator(std::string Expression);
 };
 
