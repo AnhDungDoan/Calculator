@@ -46,6 +46,7 @@ int Processor::Analysis(std::string &Expression)
 	//	2: Assignment Variable
 	//  3: Vector Processing
 	//  4: Matrix
+	//  5: Exit
 
 	// remove space in string
 	int i = 0;
@@ -55,6 +56,7 @@ int Processor::Analysis(std::string &Expression)
 
 		i++;
 	}
+	if (Expression == "exit") return 5;
 
 	int lengthExpression = Expression.size();
 	for (int i = 0; i < lengthExpression; i++)

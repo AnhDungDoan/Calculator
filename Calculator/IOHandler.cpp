@@ -52,6 +52,11 @@ void IOHandler::run()
 			std::cout << "[" << ans[0] << "," << ans[1] << "]" << std::endl;
 			break;
 		}
+		case 5:
+		{
+			std::cout << "Pie Pie hihi\n";
+			return;
+		}
 		}
 	}
 }
